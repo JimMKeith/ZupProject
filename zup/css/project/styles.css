@@ -1,0 +1,36 @@
+/* *******  colour pallet */ 
+
+.my_blue {
+    background: #c7ddde;   /* blue     */ 
+    color: #000000;        /* black    */ 
+}
+
+.my_red {
+    background: #f32715;   /* red      */
+    color: #15e1f3;        /* blue     */ 
+}
+
+.my_purple {                                                  
+    background: #9615f3;   /* purple   */
+    color: #72f315;        /* green    */ 
+}
+
+.my_green {                                                
+    background: #72f315;   /* green    */ 
+    color: #9615f3;        /* purple   */
+}
+
+/* ************************* */
+
+.cartoonSize {
+    width: 100px;
+    height: 80px; 
+}
+
+.rotateimg90 {
+  -webkit-transform:rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}

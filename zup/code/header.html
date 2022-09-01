@@ -1,0 +1,96 @@
+  <!-- Modal -->
+<div class="modal fade" id="sigInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signInModalLabel">Welcome</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <?php
+      //  do not go thru signIn unless specifcally asked for !!!!!
+           require_once "../zup_php/functions.php";
+
+           $signInErr  = NULL;
+           if (isset($_SERVER["REQUEST_METHOD"])) { 
+               if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                   $userid   = (isset($_POST['userid']))   ? $_POST['userid']   : null; 
+                   $password = (isset($_POST['password'])) ? $_POST['password'] : null; 
+      
+                   if (isset($userid)) {
+                       dbConnect();
+                       $signInErr = signIn($pdo, $userid, $password);
+                   }
+               } 
+           }
+    
+           require "./code/signIn.php";   //  sigIn Page 
+      ?> 
+      </div>
+    </div>
+  </div>
+</div> 
+<!-- end of modal --> 
+
+<div class='container-fluid my_purple'>
+    <div class='row hdr mx-0 my-0'>
+        <div class='col-sm float-left'> 
+                 <img src="./images/zuplogo.jpg" 
+                 class='mt-2'
+                 style="position: absolute;" 
+                 alt="Zup logo=" width='85' height='85'>
+        </div>
+        <div class='col-sm m-0 p-0'>
+            <div class="text-center">
+                <a href="index.php"><h1 class="my_purple">Dr Zup ... </h1>
+                <h2 class="my_purple">What's Up ???</h2></a>
+            </div>    
+        </div>
+        <div class="col-sm m-0 p-0">
+            <div class="text-center mt-2 p-0">
+                <div class="my_purple m-0 p-0" style='border-color:#9615f3;'>
+                    <h5 class="m-0">
+                       Welcome: 
+                    <?php
+                        $loggedIn = false; 
+                        if (isset($_SESSION['name'])) {
+                               $name = $_SESSION['name'];
+                               echo " $name";
+                               $loggedIn = true;
+                           } else {
+                               echo " Guest";
+                           };        
+                    ?>
+                    </h5>
+                </div>
+                <div class="m-3 p-0">
+                     <!-- Button trigger signIn modal -->
+                     <?php if($loggedIn): ?>  
+                     <button type="button" class="btn btn-danger"  
+                             onclick="return authLvlChk('0','logoff')">
+                        Sign Out
+                     </button>   
+                     <?php else: ?>
+                     <button type="button" class="btn btn-success" 
+                             data-toggle="modal" data-target="#sigInModal">
+                        Sign In
+                     </button>
+                     <?php endif;?> 
+                </div>   
+            </div>  
+        </div>
+    <?php
+    if (isset($signInErr)) {
+       echo "<div class='my_purple'>"; 
+       echo "<div class='alert'>";
+       echo "<script>";
+       echo "alert('$signInErr');";
+       echo "</script>";
+       echo "</div>";
+       echo "</div>";
+    }
+    ?>    
+    </div> 
+</div>
